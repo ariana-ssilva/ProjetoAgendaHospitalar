@@ -1,6 +1,6 @@
-package br.com.entra21.modelo2022.principal.modelobase;
+package br.com.entra21.model2022.main.basemodel;
 
-public class Pessoa {
+public class Person {
 	private String name;
 	private byte age;
 	private String sex;
@@ -16,10 +16,10 @@ public class Pessoa {
 	private String state;
 	private String country;
 
-	public Pessoa() {
+	public Person() {
 	}
 
-	public Pessoa(String name, byte age, String sex, String cpf, String nameMother, String nameFather, String email,
+	public Person(String name, byte age, String sex, String cpf, String nameMother, String nameFather, String email,
 			String telephone, String streetAddress, String numberAddress, String zipCode, String city, String state,
 			String country) {
 		super();
@@ -152,10 +152,10 @@ public class Pessoa {
 		this.country = country;
 	}
 
-	public Pessoa(String nome, byte idade, String cpf) {
+	public Person(String name, byte age, String cpf) {
 		super();
-		this.name = nome;
-		this.age = idade;
+		this.name = name;
+		this.age = age;
 		this.cpf = cpf;
 	}
 
