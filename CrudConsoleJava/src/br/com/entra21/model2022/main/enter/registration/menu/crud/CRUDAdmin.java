@@ -12,6 +12,7 @@ import br.com.entra21.model2022.main.basemodel.Doctor;
 
 public class CRUDAdmin extends Menu implements ICrud<Admin> {
 
+	
 	private HashMap<String, Admin> list = Database.admin;
 
 	public CRUDAdmin() {
@@ -20,9 +21,9 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 
 	@Override
 	public byte captureOption() {
-		byte opcao = super.captureOption();
+		byte option = super.captureOption();
 
-		switch (opcao) {
+		switch (option) {
 		case 0:
 			System.out.println("Back to Registration Menu...");
 			break;
@@ -46,11 +47,11 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 			System.out.println("Enter a valid option " + super.getTitle());
 			break;
 		}
-		return opcao;
+		return option;
 	}
 
-	public CRUDAdmin(String titulo, ArrayList<String> options) {
-		super(titulo, options);
+	public CRUDAdmin(String title, ArrayList<String> options) {
+		super(title, options);
 
 	}
 
@@ -75,11 +76,11 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 	@Override
 	public void add() {
 
-		Admin novo = captureValuesAdd();
-		if (search(novo) == null) {
-			list.put(novo.getLogin(), novo);
+		Admin theNew = captureValuesAdd();
+		if (search(theNew) == null) {
+			list.put(theNew.getLogin(), theNew);
 		} else {
-			System.out.println("A registry with the key " + novo.getLogin() + "already exists.");
+			System.out.println("A registry with the key " + theNew.getLogin() + "already exists.");
 		}
 
 	}
@@ -93,8 +94,8 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 	@Override
 	public void edit(Admin key) {
 
-		Admin adminAtual = search(key);
-		if (adminAtual == null) {
+		Admin currentAdmin = search(key);
+		if (currentAdmin == null) {
 			System.out.println("There's not a registry with the key: "+ key.getLogin());
 		} else {
 			list.put(key.getLogin(), captureValue());
@@ -105,8 +106,8 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 	@Override
 	public void delete(Admin key) {
 
-		Admin adminAtual = search(key);
-		if (adminAtual == null) {
+		Admin currentAdmin = search(key);
+		if (currentAdmin == null) {
 			System.out.println("There's not a registry with the key: "+ key.getLogin());
 		} else {
 			list.remove(key.getLogin());
@@ -119,13 +120,13 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 	public Admin captureKey() {
 
 		Admin form = new Admin();
-		System.out.println("InEnter the KEY");
+		System.out.println("Enter the KEY");
 		form.setLogin(super.getInput().next().replaceAll("\\p{Punct}", ""));
 		return form;
 
 	}
 
-	public Admin capturarValoresAdd() {
+	public Admin captureValuesAdd() {
 
 		Admin form = new Admin();
 
@@ -144,7 +145,7 @@ public class CRUDAdmin extends Menu implements ICrud<Admin> {
 
 		Admin form = new Admin();
 
-		// System.out.println("Informe o novo login:");
+		// System.out.println("Informe o theNew login:");
 		// form.setLogin(super.getEntrada().next());
 
 		// System.out.println("Informe a senha:");

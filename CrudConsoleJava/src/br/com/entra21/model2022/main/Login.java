@@ -23,8 +23,8 @@ public class Login {
 			System.out.println("Is not possible to login, all the attemps failed");
 			return;
 		} else {
-			System.out.println((attempt > 1 ? "Remain " : "Resta ") + attempt + (attempt > 1 ? " attempts" : " attempt")
-					+ " de login:");
+			System.out.println((attempt > 1 ? "Remains " : "Remain ") + attempt + (attempt > 1 ? " attempts" : " attempt")
+					+ " to login:");
 		}
 		try {
 			System.out.println("Enter the user login:");

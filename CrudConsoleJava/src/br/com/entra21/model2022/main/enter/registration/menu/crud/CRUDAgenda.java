@@ -12,191 +12,192 @@ import br.com.entra21.model2022.main.basemodel.Doctor;
 import br.com.entra21.model2022.main.basemodel.Patient;
 
 public class CRUDAgenda extends Menu implements ICrud<Agenda> {
-	private HashMap<String, Patient> listaPaciente = Database.pacientes;
-	private HashMap<String, Doctor> listaMedico = Database.medicos;
-	private HashMap<String, Agenda> lista = Database.agendas;
+	private HashMap<String, Patient> listPatients = Database.patients;
+	private HashMap<String, Doctor> listDoctors = Database.doctors;
+	private HashMap<String, Agenda> list = Database.agendas;
 
 	public CRUDAgenda() {
-		super(" Agenda  ", opcoes);
+		super(" Agenda  ", options);
 	}
 
-	public byte capturarOpcao() {
-		byte opcao = super.capturarOpcao();
+	public byte capturaroption() {
+		byte option = super.captureOption();
 
-		switch (opcao) {
+		switch (option) {
 
 		case 0:
-			System.out.println("Voltando ao menu Cadastro...");
+			System.out.println("Back to registration menu...");
 			break;
 		case 1:
-			listar(lista);
+			list(list);
 			break;
 		case 2:
-			adicionar();
+			add();
 			break;
 		case 3:
-			exibirDetalhes(buscar(capturarChave()));
+			showDetails(search(captureKey()));
 			break;
 		case 4:
-			editar(capturarChave());
+			edit(captureKey());
 			break;
 		case 5:
-			deletar(capturarChave());
+			delete(captureKey());
 			break;
 
 		default:
-			System.out.println("Opcao invalida para o menu de " + super.getTitulo());
+			System.out.println("Invalid option to " + super.getTitle() + " menu");
 			break;
 
 		}
 
-		return opcao;
+		return option;
 	}
 
-	public CRUDAgenda(String titulo, ArrayList<String> opcoes) {
-		super(titulo, opcoes);
+	public CRUDAgenda(String title, ArrayList<String> options) {
+		super(title, options);
 
 	}
 
 	@Override
-	public void listar(HashMap<String, Agenda> lista) {
+	public void list(HashMap<String, Agenda> list) {
 		System.out.println(
-				"|------------------------------- LISTA " + getTitulo() + "---------------------------------|");
-		System.out.println("\t|-------- PACIENTE ------  DATA ------ MEDICO-----|");
-		for (Agenda agenda : lista.values()) {
-			System.out.println("\t" + agenda.getId() + " - " + agenda.getPaciente().getName() + " - "
-					+ agenda.getDataAgendamento() + " - " + agenda.getMedico().getName());
+				"|------------------------------- LIST " + getTitle() + "---------------------------------|");
+		System.out.println("\t|-------- PATIENT ------  DATE ------ DOCTOR-----|");
+		for (Agenda agenda : list.values()) {
+			System.out.println("\t" + agenda.getId() + " - " + agenda.getPatient().getName() + " - "
+					+ agenda.getDateAgenda() + " - " + agenda.getDoctor().getName());
 		}
-		System.out.println("|------------------------------- QUANTIDADE (" + lista.size()
+		System.out.println("|------------------------------- QUANTITY (" + list.size()
 				+ ") ---------------------------------|");
 		System.out.println("|--------------------------------------------------------------------------------|\n");
 	}
 
 	@Override
-	public void adicionar() {
-		Agenda agenda = capturarValores();
-		if (buscar(agenda) == null) {
-			lista.put(String.valueOf(agenda.getId()), agenda);
+	public void add() {
+		Agenda agenda = captureValue();
+		if (search(agenda) == null) {
+			list.put(String.valueOf(agenda.getId()), agenda);
 		} else {
-			System.out.println("Ja existe um registro com essa CHAVE: " + agenda.getId());
+			System.out.println("A regsitry with the key: " + agenda.getId() + " already existis.");
 		}
 	}
 
 	@Override
-	public Agenda buscar(Agenda chave) {
-		return lista.get(String.valueOf(chave.getId()));
+	public Agenda search(Agenda key) {
+		return list.get(String.valueOf(key.getId()));
 	}
 
 	@Override
-	public void editar(Agenda chave) {
-		Agenda agendaAtual = buscar(chave);
-		if (agendaAtual == null) {
-			System.out.println("Nao existe um registro com essa CHAVE: " + agendaAtual.getId());
+	public void edit(Agenda key) {
+		Agenda currentAgenda = search(key);
+		if (currentAgenda == null) {
+			System.out.println("There isn't a registry with the  key: " + currentAgenda.getId());
 		} else {
-			lista.put(String.valueOf(chave.getId()), capturarValoresEditar());
-			System.out.println("Dados Atualizados");
+			list.put(String.valueOf(key.getId()), capturarValoresEditar());
+			System.out.println("Data updated");
 		}
 	}
 
 	@Override
-	public void deletar(Agenda chave) {
-		Agenda agendaAtual = buscar(chave);
-		if (agendaAtual == null) {
-			System.out.println("Nao existe um registro com essa CHAVE: " + agendaAtual.getId());
+	public void delete(Agenda key) {
+		Agenda currentAgenda = search(key);
+		if (currentAgenda == null) {
+			System.out.println("There isn't a registry with the  key: " + currentAgenda.getId());
 		} else {
-			lista.remove(String.valueOf(chave.getId()));
-			System.out.println("Item excluido");
+			list.remove(String.valueOf(key.getId()));
+			System.out.println("Deleted!");
 		}
 	}
 
 	@Override
-	public Agenda capturarChave() {
+	public Agenda captureKey() {
 		Agenda agenda = new Agenda();
-		System.out.println("Informe a CHAVE: ");
-		agenda.setId(super.getEntrada().nextInt());
+		System.out.println("Enter a key: ");
+		agenda.setId(super.getInput().nextInt());
 
 		return agenda;
 	}
 
-	public Doctor capturarChaveMedico() {
+	public Doctor captureDoctorKey() {
 		Doctor agenda = new Doctor();
-		System.out.println("Informe o cpf do medico: ");
-		agenda.setCpf(super.getEntrada().next().replaceAll("\\p{Punct}", ""));
+		System.out.println("Enter the doctor CPF: ");
+		agenda.setCpf(super.getInput().next().replaceAll("\\p{Punct}", ""));
 
 		return agenda;
 	}
 
-	public Patient capturarChavePaciente() {
+	public Patient capturePatientKey() {
 		Patient agenda = new Patient();
-		System.out.println("Informe o cpf do paciente: ");
-		agenda.setCpf(super.getEntrada().next().replaceAll("\\p{Punct}", ""));
+		System.out.println("enter the patient CPF: ");
+		agenda.setCpf(super.getInput().next().replaceAll("\\p{Punct}", ""));
 
 		return agenda;
 	}
 
-	public Agenda capturarValoresEditar() {
+	public Agenda captureEditValues() {
 
-		Agenda agenda = buscar(capturarChave());
+		Agenda agenda = search(captureKey());
 		Scanner input = new Scanner(System.in);
 
 		byte option;
 		do {
-			System.out.println("Informe qual dado deseja alterar do agendamento: " + agenda.getId());
-			System.out.println("0 - Sair");
-			System.out.println("1 - Medico");
-			System.out.println("2 - Paciente");
-			System.out.println("3 - Data");
+			System.out.println("Enter the field's number to edit: " + agenda.getId());
+			System.out.println("0 - Exit");
+			System.out.println("1 - Doctor");
+			System.out.println("2 - Patient");
+			System.out.println("3 - Date");
 			option = input.nextByte();
 
 			switch (option) {
 			case 1:
-				agenda.setMedico(buscarMedico(capturarChaveMedico()));
-				System.out.println("Medico alterado com sucesso!");
+				agenda.setDoctor(null);
+				System.out.println("Doctor changed sucessfully!");
 				break;
 			case 2:
-				agenda.setPaciente(buscarPaciente(capturarChavePaciente()));
-				System.out.println("Paciente alterado com sucesso!");
+				agenda.setPatient(null);
+				System.out.println("Patient changed sucessfully!");
 				break;
 			case 3:
-				agenda.setDataAgendamento(getEntrada().next());
-				System.out.println("Data alterada com sucesso!");
+				agenda.setDateAgenda(getInput().next());
+				System.out.println("Date changed sucessfully!");
 				break;
 
 			default:
-				System.out.println("Selecione uma opcao valida");
+				System.out.println("Enter a valid option!");
 				break;
 			}
 
 		} while (option != 0);
 
-		agenda.setMedico(buscarMedico(capturarChaveMedico()));
-		agenda.setPaciente(buscarPaciente(capturarChavePaciente()));
-		System.out.println("Informe a data do Agendamento: ");
-		agenda.setDataAgendamento(super.getEntrada().next());
+		agenda.setDoctor(searchMedico(captureDoctorKey()));
+		agenda.setPatient(searchPaciente(capturePatientKey()));
+		System.out.println("Enter the agenda date: ");
+		agenda.setDateAgenda(super.getInput().next());
 
-		System.out.println("Foi agendando uma consulta: \nCodigo: " + agenda.getId() + "\nCom o medico: "
-				+ agenda.getMedico().getName() + "\nNo dia: " + agenda.getDataAgendamento() + "\nCom o paciente: "
-				+ agenda.getPaciente().getName());
+		System.out.println("An appointment has been scheduled");
+		System.out.println("An appointment has been scheduled: \nCode: " + agenda.getId() + "\nWith the doctor: "
+				+ agenda.getDoctor().getName() + "\nin : " + agenda.getDateAgenda() + "\nWith the pacient: "
+				+ agenda.getPatient().getName());
 
 		return agenda;
 	}
 
 	@Override
-	public Agenda capturarValores() {
+	public Agenda captureValue() {
 
 		Agenda agenda = new Agenda();
 
-		if (agenda.getId() < lista.size()) {
-			agenda.setId(lista.size() + 1);
+		if (agenda.getId() < list.size()) {
+			agenda.setId(list.size() + 1);
 		} else {
 
 		}
 		listarMedico(listaMedico);
 
-		agenda.setMedico(buscarMedico(capturarChaveMedico()));
-		agenda.setPaciente(buscarPaciente(capturarChavePaciente()));
+		agenda.setMedico(searchMedico(capturarkeyMedico()));
+		agenda.setPaciente(searchPaciente(capturarkeyPaciente()));
 		System.out.println("Informe a data do Agendamento: ");
-		agenda.setDataAgendamento(super.getEntrada().next());
+		agenda.setDataAgendamento(super.getInput().next());
 
 		System.out.println("|--------------------------------------------------------------------------------|");
 		System.out.println("Foi agendando uma consulta: \nCodigo: " + agenda.getId() + " \nCom o medico: "
@@ -218,7 +219,7 @@ public class CRUDAgenda extends Menu implements ICrud<Agenda> {
 	}
 
 	public void listarMedico(HashMap<String, Doctor> listaMedico) {
-		System.out.println("------------- LISTA " + getTitulo() + "-----------------");
+		System.out.println("------------- LISTA " + gettitle() + "-----------------");
 		System.out.println("|---------- CPF ----------  NOME ------ ESPECIALIDADE---|");
 		for (Doctor medico : listaMedico.values()) {
 
@@ -231,11 +232,11 @@ public class CRUDAgenda extends Menu implements ICrud<Agenda> {
 
 	}
 
-	public Doctor buscarMedico(Doctor chave) {
-		return listaMedico.get(chave.getCpf());
+	public Doctor searchMedico(Doctor key) {
+		return listaMedico.get(key.getCpf());
 	}
 
-	public Patient buscarPaciente(Patient chave) {
-		return listaPaciente.get(chave.getCpf());
+	public Patient searchPaciente(Patient key) {
+		return listaPaciente.get(key.getCpf());
 	}
 }
